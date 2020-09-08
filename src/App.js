@@ -4,11 +4,11 @@ import Cliente from './entities/Cliente'
 
 function App() {
 
-  const [stateTextBox, setTexteBox] = useState('');
+  const [stateTextBox, setTextBox] = useState('');
   const [stateCliente, setStateCliente] = useState(null);
   const [stateResultado, setStateResultado] = useState('');
   const clientes = [];
-  let result = [];
+  let result;
   let url;
 
   function updateUrl( value) {
@@ -27,13 +27,13 @@ function App() {
   }
 
   const handleChange = (event) =>{
-    setTexteBox(event.target.value);
+    setTextBox(event.target.value);
   }
 
   if (stateCliente != null){
 
     if(stateCliente.length > 1){
-      
+
       let jsonResponse = Object.keys(stateCliente).map(key => ({[key]: stateCliente[key]}));
 
       jsonResponse.forEach( (element,i) => {
@@ -47,14 +47,36 @@ function App() {
         clientes.push( new Cliente(stateCliente.id,stateCliente.nome,stateCliente.cpf));
         }
 
-      clientes.forEach(element => {
-        result.push(
-          <h2>
-            {element.toString()}
-            <br/>
-          </h2>  
-        );
-    });
+         let itens = [];
+        
+          result = (
+            <table className="table table-striped"> 
+          <thead> 
+          <tr>
+           <th>Id</th>
+           <th>Nome</th>
+           <th>CPF</th>
+          </tr>  
+          </thead>
+          <tbody>
+
+            {clientes.forEach(element => {
+              itens.push(
+            <tr> 
+              <td>{element.id}</td> 
+              <td>{element.nome}</td> 
+              <td>{element.cpf}</td> 
+            </tr>
+              );
+            })}
+
+            {itens}
+            
+            </tbody> 
+          </table>            
+          );
+      
+
     setStateResultado(result);
     setStateCliente(null);
   }
@@ -87,13 +109,14 @@ function App() {
 
             <div>
               <form onSubmit = {requere}>
-                <button  type="submit" className = "btn btn-success" onClick = { ()=> (updateUrl('s'))}>
-                  Listar Todos
-                </button>
+                  <button  type="submit" className = "btn btn-success" onClick = { ()=> (updateUrl('s'))}>
+                    Listar Todos
+                  </button>
                 </form>
-         </div>
+            </div>
 
           <div>
+            <br/>
               {stateResultado}                
           </div>
 
