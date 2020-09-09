@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
-import Cliente from './entities/Cliente'
+import Cliente from './entities/Cliente';
+import Header from './Views/Header';
 
 function App() {
 
@@ -83,9 +84,12 @@ function App() {
 
   return (
     <div className="container text-center ">
-        <h1 className="py-5 text-uppercase"> 
-          Busca por cliente 
-        </h1>
+
+
+        <Header name="Busca por cliente" colorStyle = "p-3 mb-2 bg-info text-white" />
+      
+
+      <div> 
             <form onSubmit = {requere}>
               <div className="form-group">
                 <div className = "input-group">
@@ -121,6 +125,8 @@ function App() {
           </div>
 
       </div>
+
+    </div>
 
   );
 }
