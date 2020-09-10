@@ -1,18 +1,19 @@
 import React, {useState} from 'react';
 import Cliente from '../../entities/Cliente';
+import List from '../../util/List';
 
 const Busca = () =>{
-       
+           
   const [stateTextBox, setTextBox] = useState('');
   const [stateCliente, setStateCliente] = useState(null);
   const [stateResultado, setStateResultado] = useState('');
   const clientes = [];
+  let header = [];
   let result;
   let url;
 
   function updateUrl( value) {
     url = "http://localhost:8080/Cliente" + value;
-    console.log(url);
   }
 
   const requere = (event) =>{
@@ -37,46 +38,25 @@ const Busca = () =>{
 
       jsonResponse.forEach( (element,i) => {
         if (element[i] != null){
-          clientes.push( new Cliente(element[i].id,element[i].nome,element[i].cpf));
+          clientes.push([ element[i].id,element[i].nome,element[i].cpf ]);
+          console.log(clientes);
         }
       });
       }
     
         else{
-        clientes.push( new Cliente(stateCliente.id,stateCliente.nome,stateCliente.cpf));
+        clientes.push([ stateCliente.id,stateCliente.nome,stateCliente.cpf ]);
         }
-
-         let itens = [];
         
-          result = (
-            <table className="table table-striped"> 
-          <thead> 
-          <tr>
-           <th>Id</th>
-           <th>Nome</th>
-           <th>CPF</th>
-          </tr>  
-          </thead>
-          <tbody>
+        header = ["id","Nome","CPF"];
 
-            {clientes.forEach(element => {
-              itens.push(
-            <tr> 
-              <td>{element.id}</td> 
-              <td>{element.nome}</td> 
-              <td>{element.cpf}</td> 
-            </tr>
-              );
-            })}
-
-            {itens}
-            
-            </tbody> 
-          </table>            
-          );
+        result = (
+            <List header = {header} content = {clientes} /> 
+        );
       
 
     setStateResultado(result);
+          
     setStateCliente(null);
   }
   return(
@@ -109,10 +89,9 @@ const Busca = () =>{
           </button>
         </form>
     </div>
-
+    {stateResultado}
   <div>
-    <br/>
-      {stateResultado}                
+    <br/>               
   </div>
 </div>
   );
