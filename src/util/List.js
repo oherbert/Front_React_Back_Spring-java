@@ -2,49 +2,36 @@ import React, { Component } from 'react';
 
  class List extends Component{
 
-    
 
     render(){
 
-        let itensHeader = [];
-        let itensContent = [];
-        
+        const itensHeader = this.props.header.map((item) =>
+        <td key = {item.toString()}>
+          {item}
+        </td>
+        ); 
+
+        const itensContent = this.props.content.map( item =>
+          <tr key ={item}>
+              {
+              item.map( subItem =>
+              <td key = {subItem.toString()}>
+                  {subItem}
+              </td>
+              )
+              }
+          </tr>
+        );
+     
         return(
             <div>
             <table className="table table-striped"> 
           <thead> 
           <tr>
-
-          {              
-            this.props.header.forEach( element => {
-              itensHeader.push(            
-              <td>{element}</td>              
-              );
-            })
-            }
-
                 {itensHeader}
-          
           </tr>  
           </thead>
           <tbody>
-
-            {
-            this.props.content.forEach( (element) => {
-                let itens = [];
-                itensContent.push(
-            <tr> 
-
-                {element.forEach(item => {
-                    itens.push(<td>{item}</td>)
-                })}
-                
-              {itens}
-              
-            </tr>
-              );
-            })
-            }
 
             {itensContent}
             

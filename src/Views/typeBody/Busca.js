@@ -1,15 +1,12 @@
 import React, {useState} from 'react';
-import Cliente from '../../entities/Cliente';
 import List from '../../util/List';
 
 const Busca = () =>{
            
   const [stateTextBox, setTextBox] = useState('');
   const [stateCliente, setStateCliente] = useState(null);
-  const [stateResultado, setStateResultado] = useState('');
+  const [stateList, setStateList] = useState('');
   const clientes = [];
-  let header = [];
-  let result;
   let url;
 
   function updateUrl( value) {
@@ -48,14 +45,10 @@ const Busca = () =>{
         clientes.push([ stateCliente.id,stateCliente.nome,stateCliente.cpf ]);
         }
         
-        header = ["id","Nome","CPF"];
+         let header = ["id","Nome","CPF"];
 
-        result = (
-            <List header = {header} content = {clientes} /> 
-        );
       
-
-    setStateResultado(result);
+    setStateList( <List header = {header} content = {clientes} />);
           
     setStateCliente(null);
   }
@@ -89,7 +82,7 @@ const Busca = () =>{
           </button>
         </form>
     </div>
-    {stateResultado}
+    {stateList}
   <div>
     <br/>               
   </div>
