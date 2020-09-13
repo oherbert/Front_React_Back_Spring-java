@@ -6,17 +6,17 @@ import React, { Component } from 'react';
     render(){
 
         const itensHeader = this.props.header.map((item) =>
-        <td key = {item.toString()}>
+        <td key = {item}>
           {item}
         </td>
         ); 
 
         const itensContent = this.props.content.map( item =>
-          <tr key ={item}>
+          <tr key = {item}>
               {
-              item.map( subItem =>
-              <td key = {subItem.toString()}>
-                  {subItem}
+              Object.keys(item).map( subItem =>
+              <td key = {item[subItem]}>
+                  {item[subItem]}
               </td>
               )
               }
@@ -40,10 +40,7 @@ import React, { Component } from 'react';
         </div>
         );
     }
-    
-
-    
-
+      
 }
 
 export default List;

@@ -6,7 +6,6 @@ const Busca = () =>{
   const [stateTextBox, setTextBox] = useState('');
   const [stateCliente, setStateCliente] = useState(null);
   const [stateList, setStateList] = useState('');
-  const clientes = [];
   let url;
 
   function updateUrl( value) {
@@ -29,24 +28,23 @@ const Busca = () =>{
 
   if (stateCliente != null){
 
+    const clientes = [];
+    let header = [];
+
+      
     if(stateCliente.length > 1){
-
-      let jsonResponse = Object.keys(stateCliente).map(key => ({[key]: stateCliente[key]}));
-
-      jsonResponse.forEach( (element,i) => {
-        if (element[i] != null){
-          clientes.push([ element[i].id,element[i].nome,element[i].cpf ]);
-          console.log(clientes);
-        }
-      });
-      }
-    
+      
+      stateCliente.map( cliente =>  clientes.push(cliente));
+      stateCliente.map( title => Object.keys(title).map(item => header.push(item.toUpperCase())));
+      const filter = new Set(header);
+      header = [...filter];
+      
+    }
         else{
-        clientes.push([ stateCliente.id,stateCliente.nome,stateCliente.cpf ]);
-        }
+        Object.keys(stateCliente).map( title => header.push(title.toUpperCase()));
+        clientes.push(stateCliente);
+      }
         
-         let header = ["id","Nome","CPF"];
-
       
     setStateList( <List header = {header} content = {clientes} />);
           
