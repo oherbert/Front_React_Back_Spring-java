@@ -4,7 +4,7 @@ import List from '../../util/List';
 const Busca = () =>{
            
   const [stateTextBox, setTextBox] = useState('');
-  const [stateCliente, setStateCliente] = useState(null);
+  const [stateJson, setStateJson] = useState(null);
   const [stateList, setStateList] = useState('');
   let url;
 
@@ -17,8 +17,8 @@ const Busca = () =>{
   
     fetch(url)
     .then(response => response.json())
-    .then(clientResponse => setStateCliente(clientResponse))
-    .catch(()=> console.log("Erro ao buscar os clientes"),setStateCliente(null));
+    .then(clientResponse => setStateJson(clientResponse))
+    .catch(()=> console.log("Erro ao buscar os clientes"),setStateJson(null));
 
   }
 
@@ -26,30 +26,13 @@ const Busca = () =>{
     setTextBox(event.target.value);
   }
 
-  if (stateCliente != null){
-
-    const clientes = [];
-    let header = [];
-
-      
-    if(stateCliente.length > 1){
-      
-      stateCliente.map( cliente =>  clientes.push(cliente));
-      stateCliente.map( title => Object.keys(title).map(item => header.push(item.toUpperCase())));
-      const filter = new Set(header);
-      header = [...filter];
-      
-    }
-        else{
-        Object.keys(stateCliente).map( title => header.push(title.toUpperCase()));
-        clientes.push(stateCliente);
-      }
-        
-      
-    setStateList( <List header = {header} content = {clientes} />);
+  if (stateJson != null){
+  
+    setStateList( <List json = {stateJson} />);
           
-    setStateCliente(null);
+    setStateJson(null);
   }
+
   return(
     <div> 
     <form onSubmit = {requere}>
@@ -80,6 +63,7 @@ const Busca = () =>{
           </button>
         </form>
     </div>
+    <br/>
     {stateList}
   <div>
     <br/>               

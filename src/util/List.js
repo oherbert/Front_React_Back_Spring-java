@@ -1,17 +1,34 @@
 import React, { Component } from 'react';
 
- class List extends Component{
+// Recebe um Json como entrada 
 
 
+ class List extends Component{  
     render(){
 
-        const itensHeader = this.props.header.map((item) =>
+    const content = [];
+    let header = [];
+  
+    if(this.props.json.length > 1){
+        this.props.json.map( head =>  content.push(head));
+        this.props.json.map( title => Object.keys(title).map(item => header.push(item.toUpperCase())));
+        const filter = new Set(header);
+        header = [...filter]; 
+    }
+        else{
+          Object.keys(this.props.json).map( title => header.push(title.toUpperCase()));
+          content.push(this.props.json);
+      }
+
+      // O cabeçalho da lista 
+        const itensHeader = header.map((item) =>
         <td key = {item}>
           {item}
         </td>
         ); 
 
-        const itensContent = this.props.content.map( item =>
+        // O corpo da lista 
+        const itensContent = content.map( item =>
           <tr key = {item}>
               {
               Object.keys(item).map( subItem =>
@@ -22,7 +39,7 @@ import React, { Component } from 'react';
               }
           </tr>
         );
-     
+
         return(
             <div>
             <table className="table table-striped"> 
@@ -32,15 +49,12 @@ import React, { Component } from 'react';
           </tr>  
           </thead>
           <tbody>
-
             {itensContent}
-            
             </tbody> 
           </table> 
         </div>
         );
     }
-      
 }
 
 export default List;
